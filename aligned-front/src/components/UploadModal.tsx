@@ -31,14 +31,15 @@ const UploadModal: React.FC<Props> = ({open, item, isEditing, onClose, onUpload}
             setName(item.name);
             setUrl(item.url);
             setType(item.type);
-            setTouched(false); // reset touch when prefilled
-        } else {
+            setTouched(false);
+        } else if (open) {
+            // Only reset when modal is reopened in create mode
             setName('');
             setUrl('');
             setType('link');
             setTouched(false);
         }
-    }, [item]);
+    }, [item, open]);
 
     const validateUrl = (input: string): boolean => {
         const pattern = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,6})([\/\w .-]*)*\/?$/i;
