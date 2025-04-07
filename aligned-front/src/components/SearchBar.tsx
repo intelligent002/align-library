@@ -1,22 +1,26 @@
 import React from 'react';
-import { FiSearch } from 'react-icons/fi';
 
-interface Props {
+interface SearchBarProps {
   value: string;
-  onChange: (val: string) => void;
+  onChange: (value: string) => void;
+  placeholder?: string;
 }
 
-const SearchBar: React.FC<Props> = ({ value, onChange }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, placeholder = 'Search Item...' }) => {
   return (
-    <div className="flex items-center border rounded-md px-2 py-1 w-64 bg-white">
-      <FiSearch className="text-gray-400 mr-2" />
-      <input
-        type="text"
-        placeholder="Search Item..."
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full outline-none"
-      />
+    <div className="justify-self-center w-full max-w-[320px]">
+      <div className="relative">
+        <span className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+          <img src="/assets/search.svg" alt="search" className="w-[22px] h-[22px]" />
+        </span>
+        <input
+          type="text"
+          placeholder={placeholder}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="w-full pl-10 pr-4 py-2 rounded-md border border-gray-300 font-bold text-[#A9B5DB] text-[16px] font-['Nunito_Sans'] placeholder-[#A9B5DB] focus:outline-none"
+        />
+      </div>
     </div>
   );
 };
