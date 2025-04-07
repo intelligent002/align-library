@@ -11,13 +11,36 @@ interface Props {
     onCancel?: () => void;
 }
 
-function isValidHttpUrl(url: string): boolean {
-    try {
-        const u = new URL(url);
-        return u.protocol === 'http:' || u.protocol === 'https:';
-    } catch (_) {
-        return false;
+const VALID_TLD_REGEX = /^[a-z]{2,63}$/i;
+
+function isValidUrlWithTld(url: string): boolean {
+  try {
+    const parsed = new URL(url);
+
+    // Check protocol
+    if (!['http:', 'https:'].includes(parsed.protocol)) {
+      return false;
     }
+
+    const hostname = parsed.hostname;
+
+    // Basic domain structure check
+    const domainParts = hostname.split('.');
+    if (domainParts.length < 2) return false;
+
+    const tld = domainParts[domainParts.length - 1];
+
+    // TLD must contain only letters and be a valid length
+    if (!VALID_TLD_REGEX.test(tld)) {
+      return false;
+    }
+
+    // Optional: block internal/local domains
+    return !(hostname.endsWith('.local') || hostname === 'localhost');
+
+  } catch {
+    return false;
+  }
 }
 
 const UploadModal: React.FC<Props> = ({open, item, isEditing, onClose, onUpload}) => {
@@ -50,7 +73,7 @@ const UploadModal: React.FC<Props> = ({open, item, isEditing, onClose, onUpload}
         }
     }, [item, open]);
 
-    const isValidUrl = url ? isValidHttpUrl(url) : true;
+    const isValidUrl = url ? isValidUrlWithTld(url) : true;
 
     if (!open) return null;
 
