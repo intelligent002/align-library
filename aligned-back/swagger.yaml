@@ -4,8 +4,7 @@ info:
   version: 1.0.0
   description: API for managing library items (YouTube, links)
 servers:
-  - url: http://localhost:8001
-  - url: http://dev.intel.r7g.org:8001
+  - url: https://align-api.r7g.org
 paths:
   /item:
     get:

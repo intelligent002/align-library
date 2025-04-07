@@ -46,7 +46,7 @@ services:
     ports:
       - "8002:8002"
     environment:
-      - API_URL=http://align.r7g.org:8001
+      - API_URL=https://align-api.r7g.org
       - ENVIRONMENT=DEVELOPMENT
       - LOG_LEVEL=debug
       - NGINX_PORT=8002
