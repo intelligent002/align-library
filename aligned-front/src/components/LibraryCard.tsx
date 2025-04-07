@@ -61,21 +61,30 @@ const LibraryCard: React.FC<Props> = ({item, onDelete, onEdit}) => {
                         <div
                             className="w-[80px] h-[27px] flex items-center justify-between px-[4px] py-[3px] rounded border border-[#7C8DC1] bg-[#EFF3FA]/80 backdrop-blur-sm">
                             <button
-                                onClick={() => window.open(item.url, '_blank')}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    window.open(item.url, '_blank')
+                                }}
                                 title="Open"
                                 className="w-[18px] h-[18px] flex items-center justify-center p-0 m-0"
                             >
                                 <img src="/assets/link-control-open.svg" alt="Open"/>
                             </button>
                             <button
-                                onClick={() => onEdit(item)}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onEdit(item)
+                                }}
                                 title="Edit"
                                 className="w-[18px] h-[18px] flex items-center justify-center p-0 m-0"
                             >
                                 <img src="/assets/link-control-edit.svg" alt="Edit"/>
                             </button>
                             <button
-                                onClick={() => onDelete(item.id)}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onDelete(item.id)
+                                }}
                                 title="Delete"
                                 className="w-[18px] h-[18px] flex items-center justify-center p-0 m-0"
                             >
