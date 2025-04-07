@@ -11,6 +11,15 @@ interface Props {
     onCancel?: () => void;
 }
 
+function isValidHttpUrl(url: string): boolean {
+    try {
+        const u = new URL(url);
+        return u.protocol === 'http:' || u.protocol === 'https:';
+    } catch (_) {
+        return false;
+    }
+}
+
 const UploadModal: React.FC<Props> = ({open, item, isEditing, onClose, onUpload}) => {
     const [name, setName] = useState('');
     const [url, setUrl] = useState('');
@@ -41,12 +50,7 @@ const UploadModal: React.FC<Props> = ({open, item, isEditing, onClose, onUpload}
         }
     }, [item, open]);
 
-    const validateUrl = (input: string): boolean => {
-        const pattern = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,6})([\/\w .-]*)*\/?$/i;
-        return pattern.test(input);
-    };
-
-    const isValidUrl = url ? validateUrl(url) : true;
+    const isValidUrl = url ? isValidHttpUrl(url) : true;
 
     if (!open) return null;
 
