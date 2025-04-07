@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {LibraryItem} from './types';
 import LibraryGrid from './LibraryGrid';
 import UploadModal from './UploadModal';
+import SearchBar from './SearchBar';
 
 interface Props {
     items: LibraryItem[];
@@ -52,20 +53,7 @@ const Library: React.FC<Props> = ({items, onUpload, onEdit, onDelete}) => {
                 </h2>
 
                 {/* Search bar */}
-                <div className="justify-self-center w-full max-w-[320px]">
-                    <div className="relative">
-            <span className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-              <img src="/assets/search.svg" alt="search" className="w-[22px] h-[22px]"/>
-            </span>
-                        <input
-                            type="text"
-                            placeholder="Search Item..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2 rounded-md border border-gray-300 font-bold text-[#A9B5DB] text-[16px] font-['Nunito_Sans'] placeholder-[#A9B5DB] focus:outline-none"
-                        />
-                    </div>
-                </div>
+                <SearchBar value={search} onChange={setSearch} />
 
                 {/* Upload button */}
                 <button
