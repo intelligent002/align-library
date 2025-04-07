@@ -1,0 +1,125 @@
+openapi: 3.0.0
+info:
+  title: Aligned Library API
+  version: 1.0.0
+  description: API for managing library items (YouTube, links)
+servers:
+  - url: http://localhost:8001
+  - url: http://dev.intel.r7g.org:8001
+paths:
+  /item:
+    get:
+      summary: Get all items
+      responses:
+        '200':
+          description: List of items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LibraryItem'
+    post:
+      summary: Add new item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LibraryItemNew'
+      responses:
+        '201':
+          description: Item created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LibraryItem'
+  /item/{itemId}:
+    get:
+      summary: Get a single item by ID
+      parameters:
+        - in: path
+          name: itemId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Single item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LibraryItem'
+        '404':
+          description: Not found
+    delete:
+      summary: Delete item by ID
+      parameters:
+        - in: path
+          name: itemId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Item deleted
+        '404':
+          description: Not found
+    put:
+      summary: Update an existing item by ID
+      parameters:
+        - in: path
+          name: itemId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LibraryItem'
+      responses:
+        '200':
+          description: Item updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LibraryItem'
+        '404':
+          description: Not found
+
+components:
+  schemas:
+    LibraryItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+        type:
+          type: string
+          enum: [youtube, link]
+      required:
+        - id
+        - name
+        - url
+        - type
+
+    LibraryItemNew:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        type:
+          type: string
+          enum: [youtube, link]
+      required:
+        - name
+        - url
+        - type

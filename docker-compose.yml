@@ -1,0 +1,59 @@
+volumes:
+  mongo-data:
+
+networks:
+  aligned-net:
+    driver: bridge
+
+services:
+  aligned-mongo:
+    image: mongo:4.4
+    container_name: aligned-mongo
+    hostname: aligned-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - aligned-net
+
+  aligned-back:
+    build:
+      context: ./aligned-back
+      target: production
+    hostname: aligned-back
+    container_name: aligned-back
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    environment:
+      - PORT=8001
+      - MONGO_URI=mongodb://aligned-mongo:27017/aligned_library
+    depends_on:
+      - aligned-mongo
+    networks:
+      - aligned-net
+    command: ["node", "server.js"]
+
+  aligned-front:
+    build:
+      context: ./aligned-front
+      target: production
+    hostname: aligned-front
+    container_name: aligned-front
+    restart: unless-stopped
+    ports:
+      - "8002:8002"
+    environment:
+      - API_URL=http://align.r7g.org:8001
+      - ENVIRONMENT=DEVELOPMENT
+      - LOG_LEVEL=debug
+      - NGINX_PORT=8002
+      - SERVICE_NAME=aligned-front
+    depends_on:
+      - aligned-mongo
+      - aligned-back
+    networks:
+      - aligned-net
+

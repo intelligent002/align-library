@@ -1,0 +1,6 @@
+{
+  "API_URL": "http://localhost:8001",
+  "ENVIRONMENT": "dev",
+  "LOG_LEVEL": "debug",
+  "SERVICE_NAME": "front"
+}

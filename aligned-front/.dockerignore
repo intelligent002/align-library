@@ -1,0 +1,13 @@
+# Ignore system & build folders
+node_modules
+.vscode
+.idea
+.env
+*.log
+
+# Ignore Git
+.git
+.gitignore
+
+# Ignore test-only files in production
+coverage
