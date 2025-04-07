@@ -43,7 +43,6 @@ function isValidUrlWithTld(url: string): boolean {
   }
 }
 
-
 const UploadModal: React.FC<Props> = ({open, item, isEditing, onClose, onUpload}) => {
     const [name, setName] = useState('');
     const [url, setUrl] = useState('');
