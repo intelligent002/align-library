@@ -41,18 +41,8 @@ const LibraryCard: React.FC<Props> = ({item, onDelete, onEdit}) => {
                     {isYoutube ? (
                         <ReactPlayer
                             url={item.url}
-                            light={true}
-                            playIcon={
-                                <div className="bg-white/70 rounded-full p-4">
-                                    <svg
-                                        viewBox="0 0 24 24"
-                                        fill="currentColor"
-                                        className="w-10 h-10 text-purple-600"
-                                    >
-                                        <path d="M8 5v14l11-7z"/>
-                                    </svg>
-                                </div>
-                            }
+                            playing
+                            controls
                             width="100%"
                             height="100%"
                             className="react-player absolute top-0 left-0"
