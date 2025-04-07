@@ -23,9 +23,9 @@ exports.getItem = async (req, res) => {
 };
 
 exports.addItem = async (req, res) => {
-    const {name, url} = req.body;
+    const {type, name, url} = req.body;
 
-    const {isValid, errors, type} = validateItemInput(name, url);
+    const {isValid, errors} = validateItemInput(name, url);
     if (!isValid) return res.status(400).json({errors});
 
     try {
@@ -44,15 +44,15 @@ exports.addItem = async (req, res) => {
 
 exports.updateItem = async (req, res) => {
     const {itemId} = req.params;
-    const {name, url} = req.body;
+    const {type, name, url} = req.body;
 
-    const {isValid, errors, type} = validateItemInput(name, url);
+    const {isValid, errors} = validateItemInput(name, url);
     if (!isValid) return res.status(400).json({errors});
 
     try {
         const updated = await LibraryItem.findByIdAndUpdate(
             itemId,
-            {name, url, type},
+            {type, name, url},
             {new: true, runValidators: true}
         );
 
