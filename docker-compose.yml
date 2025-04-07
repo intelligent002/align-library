@@ -7,7 +7,7 @@ networks:
 
 services:
   aligned-mongo:
-    image: mongo:4.4
+    image: mongo:8
     container_name: aligned-mongo
     hostname: aligned-mongo
     restart: unless-stopped
