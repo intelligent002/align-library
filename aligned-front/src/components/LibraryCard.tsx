@@ -12,7 +12,16 @@ const LibraryCard: React.FC<Props> = ({item, onDelete, onEdit}) => {
     const isYoutube = item.type === 'youtube';
 
     return (
-        <div className="w-[250px] h-[196px] flex items-center justify-center group">
+        <div
+            className="w-[250px] h-[196px] flex items-center justify-center group"
+            onClick={() => {
+                if (item.type === 'link') {
+                    window.open(item.url, '_blank');
+                }
+            }}
+            role={item.type === 'link' ? 'button' : undefined}
+            tabIndex={item.type === 'link' ? 0 : undefined}
+        >
             <div
                 className="w-[228px] h-[174px] flex flex-col rounded-[8px] border border-[#A9B5DB] bg-white overflow-hidden transition-all duration-200"
                 style={{
